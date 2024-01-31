@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import fr.bgili.bestyoutube.dao.CategoryDao
 import fr.bgili.bestyoutube.dao.VideoDao
 import fr.bgili.bestyoutube.entities.Video
 
@@ -17,7 +16,6 @@ abstract class DatabaseService : RoomDatabase() {
 
     // dao accessors
     abstract fun videoDao(): VideoDao
-    abstract fun categoryDao(): CategoryDao
 
     // singleton pattern to ease the access to the database
     companion object {

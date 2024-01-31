@@ -1,14 +1,15 @@
 package fr.bgili.bestyoutube.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import fr.bgili.bestyoutube.Application
 import fr.bgili.bestyoutube.databinding.ActivityAddVideoBinding
 import fr.bgili.bestyoutube.entities.Video
 import fr.bgili.bestyoutube.validators.EmptyValidator
+import fr.bgili.bestyoutube.validators.URLValidator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,61 +21,71 @@ class AddVideoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVideoBinding.inflate(layoutInflater)
-
-        val categoryDao = (this.application as Application).database.categoryDao()
-
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                val categories = (application as Application).database
-                    .categoryDao()
-                    .findAll()
-
-                runOnUiThread {
-                    binding.selectCategory.adapter = android.widget.ArrayAdapter(
-                        this@AddVideoActivity,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        categories
-                    )
-                }
-            }
-        }
-
         setContentView(binding.root)
     }
 
     fun addVideo(view: View) {
 
-
-
         // get data
         val name = binding.editName.text.toString()
         val description = binding.editDescription.text.toString()
         val url = binding.editUrl.text.toString()
-//        val category = binding.selectCategory.selectedItem as String
+        val category = binding.selectCategory.selectedItem as String
+
+        var atLeastOneError = false
 
         // validate data
         val usernameEmptyValidation = EmptyValidator(name).validate()
-        binding.editName.error =
-            if (!usernameEmptyValidation.isSuccess)
-                getString(usernameEmptyValidation.message) else null
+        if (!usernameEmptyValidation.isSuccess) {
+            binding.editName.error =
+                getString(usernameEmptyValidation.message)
+            atLeastOneError = true
+        }
 
         val descriptionEmptyValidation = EmptyValidator(description).validate()
-        binding.editDescription.error =
-            if (!descriptionEmptyValidation.isSuccess)
-                getString(descriptionEmptyValidation.message) else null
+        if (!descriptionEmptyValidation.isSuccess) {
+            binding.editDescription.error =
+                getString(descriptionEmptyValidation.message)
+            atLeastOneError = true
+        }
 
         val urlEmptyValidation = EmptyValidator(url).validate()
-        binding.editUrl.error =
-            if (!urlEmptyValidation.isSuccess)
-                getString(urlEmptyValidation.message) else null
+        if (!urlEmptyValidation.isSuccess) {
+            binding.editUrl.error =
+                getString(urlEmptyValidation.message)
+            atLeastOneError = true
+        }
+
+        val invalidURLValidator = URLValidator(url).validate()
+        if (!invalidURLValidator.isSuccess) {
+            binding.editUrl.error =
+                getString(invalidURLValidator.message)
+            atLeastOneError = true
+        }
+
+        if (atLeastOneError) return
 
         // create video entity
-//        val video = Video(
-//            name = name,
-//            description = description,
-//            url = url,
-//            categoryId = 1
-//        )
+        val video = Video(
+            name = name,
+            description = description,
+            url = url,
+            category = category
+        )
+
+        // save video entity
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                (application as Application).database
+                    .videoDao()
+                    .insert(video)
+
+                runOnUiThread {
+                    startActivity(Intent(this@AddVideoActivity, MainActivity::class.java))
+                }
+//                finish()
+            }
+        }
 
 
 

@@ -20,7 +20,7 @@ data class Video(
     @ColumnInfo(name = "url")
     val url: String,
 
-    @ColumnInfo(name = "category_id")
-    val categoryId: Long
+    @ColumnInfo(name = "category")
+    val category: String
 
 ) : BaseEntity, Serializable

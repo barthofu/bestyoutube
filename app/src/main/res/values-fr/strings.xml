@@ -8,4 +8,22 @@
     <string name="url">URL</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string-array name="categories">
+        <item>Comédie</item>
+        <item>Musique</item>
+        <item>Actualités</item>
+        <item>Sports</item>
+        <item>Voyage</item>
+        <item>Documentaire</item>
+        <item>Science</item>
+        <item>Cuisine</item>
+        <item>Technologie</item>
+        <item>Art</item>
+        <item>Business</item>
+        <item>Education</item>
+        <item>Santé</item>
+        <item>Histoire</item>
+        <item>Politique</item>
+        <item>Jeux Vidéo</item>
+    </string-array>
 </resources>

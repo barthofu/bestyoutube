@@ -7,4 +7,22 @@
     <string name="url">URL</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string-array name="categories">
+        <item>Comedy</item>
+        <item>Music</item>
+        <item>News</item>
+        <item>Sports</item>
+        <item>Travel</item>
+        <item>Documentary</item>
+        <item>Science</item>
+        <item>Food</item>
+        <item>Technology</item>
+        <item>Art</item>
+        <item>Business</item>
+        <item>Education</item>
+        <item>Health</item>
+        <item>History</item>
+        <item>Politics</item>
+        <item>Video Games</item>
+    </string-array>
 </resources>
