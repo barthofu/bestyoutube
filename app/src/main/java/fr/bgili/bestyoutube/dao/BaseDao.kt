@@ -3,27 +3,54 @@ package fr.bgili.bestyoutube.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import fr.bgili.bestyoutube.entities.BaseEntity
+import java.lang.reflect.ParameterizedType
 
 abstract class BaseDao<T : BaseEntity> {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(entity: T): Long
+    fun getTableName(): String? {
+        val clazz =
+            (javaClass.superclass.genericSuperclass as ParameterizedType)
+                .actualTypeArguments[0] as Class<*>
+        // tableName = StringUtil.toSnakeCase(clazz.getSimpleName());
+        return clazz.simpleName
+    }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(entities: List<T>): LongArray
+    abstract suspend fun insert(entity: T): Long
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insert(entities: List<T>): LongArray
 
     @Update
-    abstract fun update(entity: T)
+    abstract suspend fun update(entity: T)
 
     @Update
-    abstract fun update(entities: List<T>)
+    abstract suspend fun update(entities: List<T>)
 
     @Delete
-    abstract fun delete(entity: T)
+    abstract suspend fun delete(entity: T)
 
     @Delete
-    abstract fun delete(entities: List<T>)
+    abstract suspend fun delete(entities: List<T>)
 
+    @RawQuery
+    protected abstract suspend fun findAll(query: SupportSQLiteQuery): List<T>
+
+    suspend fun findAll(): List<T> {
+        val query = SimpleSQLiteQuery("SELECT * FROM " + getTableName())
+        return findAll(query)
+    }
+
+    @RawQuery
+    protected abstract suspend fun findById(query: SupportSQLiteQuery): T
+
+    suspend fun findById(id: Long): T {
+        val query = SimpleSQLiteQuery("SELECT * FROM " + getTableName() + " WHERE id = " + id)
+        return findById(query)
+    }
 }

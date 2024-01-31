@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Best Youtube</string>
+    <string name="title_activity_add_video">Ajouter une vidéo</string>
+    <string name="text_validation_success">Champs texte valide</string>
+    <string name="text_validation_error_empty_field">Champs texte vide</string>
+    <string name="add">Ajouter</string>
+    <string name="url">URL</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+</resources>

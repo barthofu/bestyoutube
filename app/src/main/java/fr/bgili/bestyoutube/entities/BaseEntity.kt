@@ -1,6 +1,6 @@
 package fr.bgili.bestyoutube.entities
 
-abstract class BaseEntity {
+interface BaseEntity {
 
-    abstract val id: Int
+    abstract val id: Long
 }
