@@ -26,27 +26,10 @@ class MainActivity : AppCompatActivity() {
         binding.listVideos.layoutManager = LinearLayoutManager(this)
         binding.listVideos.adapter = videoAdapter
 
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                val videos = (application as Application).database
-                    .videoDao()
-                    .findAll()
-
-                // log the videos
-//                println("videos: ")
-//                videos.forEach {
-//                    println(it)
-//                }
-
-                runOnUiThread {
-                    videoAdapter.submitList(videos)
-                }
-            }
-        }
 
     }
 
     fun navigateToAddVideo(view: View) {
-        startActivity(Intent(this, AddVideoActivity::class.java))
+        startActivity(Intent(this, SaveVideoActivity::class.java))
     }
 }

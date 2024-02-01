@@ -3,10 +3,12 @@ package fr.bgili.bestyoutube.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import fr.bgili.bestyoutube.Application
-import fr.bgili.bestyoutube.databinding.ActivityAddVideoBinding
+import fr.bgili.bestyoutube.R
+import fr.bgili.bestyoutube.databinding.ActivitySaveVideoBinding
 import fr.bgili.bestyoutube.entities.Video
 import fr.bgili.bestyoutube.validators.EmptyValidator
 import fr.bgili.bestyoutube.validators.URLValidator
@@ -14,14 +16,46 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddVideoActivity : AppCompatActivity() {
+class SaveVideoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddVideoBinding
+    private lateinit var binding: ActivitySaveVideoBinding
+    private val videoId: Long by lazy {
+        intent.getLongExtra("videoId", -1)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddVideoBinding.inflate(layoutInflater)
+        binding = ActivitySaveVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (videoId != -1L) {
+
+            setTitle(R.string.title_activity_edit_video)
+
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+
+                    val video = (application as Application).database
+                        .videoDao()
+                        .findById(videoId)
+
+                    runOnUiThread {
+                        binding.editName.setText(video.name)
+                        binding.editDescription.setText(video.description)
+                        binding.editUrl.setText(video.url)
+
+                        val selectAdapter = ArrayAdapter.createFromResource(
+                            this@SaveVideoActivity,
+                            R.array.categories,
+                            android.R.layout.simple_spinner_item
+                        )
+                        selectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        binding.selectCategory.adapter = selectAdapter
+                        binding.selectCategory.setSelection(selectAdapter.getPosition(video.category))
+                    }
+                }
+            }
+        }
     }
 
     fun addVideo(view: View) {
@@ -70,20 +104,30 @@ class AddVideoActivity : AppCompatActivity() {
             name = name,
             description = description,
             url = url,
-            category = category
+            category = category,
+            favorite = false
         )
+
+        if (videoId != -1L) {
+            video.id = videoId
+        }
 
         // save video entity
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                (application as Application).database
+
+                val videoDao = (application as Application).database
                     .videoDao()
-                    .insert(video)
+
+                if (videoId != -1L) {
+                    videoDao.update(video)
+                } else {
+                    videoDao.insert(video)
+                }
 
                 runOnUiThread {
-                    startActivity(Intent(this@AddVideoActivity, MainActivity::class.java))
+                    startActivity(Intent(this@SaveVideoActivity, MainActivity::class.java))
                 }
-//                finish()
             }
         }
 

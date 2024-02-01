@@ -8,6 +8,9 @@
     <string name="url">URL</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string name="category">Catégorie</string>
+    <string name="save">Enregistrer</string>
+    <string name="title_activity_detail_video">Details</string>
     <string-array name="categories">
         <item>Comédie</item>
         <item>Musique</item>
@@ -26,4 +29,5 @@
         <item>Politique</item>
         <item>Jeux Vidéo</item>
     </string-array>
+    <string name="title_activity_edit_video">Modifier une vidéo</string>
 </resources>

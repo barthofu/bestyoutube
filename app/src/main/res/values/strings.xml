@@ -7,6 +7,9 @@
     <string name="url">URL</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string name="category">Category</string>
+    <string name="save">Save</string>
+    <string name="title_activity_detail_video">Details</string>
     <string-array name="categories">
         <item>Comedy</item>
         <item>Music</item>
@@ -25,4 +28,7 @@
         <item>Politics</item>
         <item>Video Games</item>
     </string-array>
+    <string name="title_activity_edit_video">Edit a video</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

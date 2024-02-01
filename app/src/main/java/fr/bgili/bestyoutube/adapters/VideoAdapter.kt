@@ -1,5 +1,6 @@
 package fr.bgili.bestyoutube.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import fr.bgili.bestyoutube.R
+import fr.bgili.bestyoutube.activities.DetailVideoActivity
 import fr.bgili.bestyoutube.entities.Video
 
 class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
@@ -27,6 +29,14 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallba
 
         private var textName: TextView = view.findViewById(R.id.textName)
         private var textDescription: TextView = view.findViewById(R.id.textDescription)
+
+        init {
+            view.setOnClickListener {
+                val intent = Intent(view.context, DetailVideoActivity::class.java)
+                intent.putExtra("videoId", getItem(adapterPosition).id)
+                view.context.startActivity(intent)
+            }
+        }
 
         fun bind(video: Video) {
             textName.text = video.name

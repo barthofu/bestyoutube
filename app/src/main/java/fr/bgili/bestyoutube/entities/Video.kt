@@ -9,18 +9,21 @@ import java.io.Serializable
 data class Video(
 
     @PrimaryKey(autoGenerate = true)
-    override val id: Long = 0,
+    override var id: Long = 0,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String,
 
     @ColumnInfo(name = "url")
-    val url: String,
+    var url: String,
 
     @ColumnInfo(name = "category")
-    val category: String
+    var category: String,
+
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean
 
 ) : BaseEntity, Serializable
