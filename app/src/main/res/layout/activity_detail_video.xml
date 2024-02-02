@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:outlineSpotShadowColor="#00FFFFFF"
-    tools:context=".activities.DetailVideoActivity">
+    tools:context=".views.activities.DetailVideoActivity">
 
     <TextView
         android:id="@+id/textDetailedName"
@@ -74,6 +74,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit"
         android:onClick="editVideo"
+        android:importantForAccessibility="no" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:onClick="deleteVideo"
         android:importantForAccessibility="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

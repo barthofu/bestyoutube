@@ -30,4 +30,9 @@
         <item>Jeux Vidéo</item>
     </string-array>
     <string name="title_activity_edit_video">Modifier une vidéo</string>
+    <string name="all_videos_title">Toutes les vidéos</string>
+    <string name="favorited_videos_title">Vidéos favorites</string>
+    <string name="delete_confirmation">Es-tu sûr de vouloir supprimer cette vidéo ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 </resources>

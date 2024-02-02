@@ -1,4 +1,4 @@
-package fr.bgili.bestyoutube.activities
+package fr.bgili.bestyoutube.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import fr.bgili.bestyoutube.Application
 import fr.bgili.bestyoutube.R
 import fr.bgili.bestyoutube.databinding.ActivitySaveVideoBinding
-import fr.bgili.bestyoutube.entities.Video
-import fr.bgili.bestyoutube.validators.EmptyValidator
-import fr.bgili.bestyoutube.validators.URLValidator
+import fr.bgili.bestyoutube.data.entities.Video
+import fr.bgili.bestyoutube.utils.validators.EmptyValidator
+import fr.bgili.bestyoutube.utils.validators.URLValidator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,6 +31,7 @@ class SaveVideoActivity : AppCompatActivity() {
         if (videoId != -1L) {
 
             setTitle(R.string.title_activity_edit_video)
+            binding.buttonAdd.text = getString(R.string.save)
 
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
@@ -44,6 +45,7 @@ class SaveVideoActivity : AppCompatActivity() {
                         binding.editDescription.setText(video.description)
                         binding.editUrl.setText(video.url)
 
+                        // set the spinner to the video's category
                         val selectAdapter = ArrayAdapter.createFromResource(
                             this@SaveVideoActivity,
                             R.array.categories,

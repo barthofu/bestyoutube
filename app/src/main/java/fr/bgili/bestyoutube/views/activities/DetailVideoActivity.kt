@@ -1,14 +1,17 @@
-package fr.bgili.bestyoutube.activities
+package fr.bgili.bestyoutube.views.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import fr.bgili.bestyoutube.Application
 import fr.bgili.bestyoutube.R
 import fr.bgili.bestyoutube.databinding.ActivityDetailVideoBinding
-import fr.bgili.bestyoutube.entities.Video
+import fr.bgili.bestyoutube.data.entities.Video
+import fr.bgili.bestyoutube.views.fragments.ListVideosFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,6 +81,32 @@ class DetailVideoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun deleteVideo(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.delete_confirmation)
+            .setCancelable(false)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+
+                        (application as Application).database
+                            .videoDao()
+                            .deleteById(videoId)
+
+                        runOnUiThread {
+                            startActivity(Intent(this@DetailVideoActivity, MainActivity::class.java))
+                        }
+                    }
+                }
+            }
+            .setNegativeButton(R.string.no) { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        builder.create().show()
     }
 
 

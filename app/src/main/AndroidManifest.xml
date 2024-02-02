@@ -14,16 +14,19 @@
         android:theme="@style/Theme.BestYoutube"
         tools:targetApi="31">
         <activity
-            android:name=".activities.DetailVideoActivity"
-            android:exported="false"
-            android:label="@string/title_activity_detail_video"/>
+            android:name=".activities.SplashActivity"
+            android:exported="false" />
         <activity
-            android:name=".activities.SaveVideoActivity"
+            android:name=".views.activities.DetailVideoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_video" />
+        <activity
+            android:name=".views.activities.SaveVideoActivity"
             android:exported="false"
             android:label="@string/title_activity_add_video"
             android:theme="@style/Theme.BestYoutube" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".views.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

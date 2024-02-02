@@ -1,4 +1,4 @@
-package fr.bgili.bestyoutube.fragments
+package fr.bgili.bestyoutube.views.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.bgili.bestyoutube.Application
-import fr.bgili.bestyoutube.adapters.VideoAdapter
+import fr.bgili.bestyoutube.views.adapters.VideoAdapter
 import fr.bgili.bestyoutube.databinding.FragmentListVideosBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 class ListVideosFragment : Fragment() {
 
     private lateinit var binding: FragmentListVideosBinding
+    private var isFavoriteFiltered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,8 @@ class ListVideosFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        isFavoriteFiltered = arguments?.getBoolean("isFavoriteFiltered") ?: false
 
         setVideoList()
 
@@ -41,14 +44,26 @@ class ListVideosFragment : Fragment() {
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val videos = (activity?.application as Application).database
+
+                val videoDao = (activity?.application as Application).database
                     .videoDao()
-                    .findAll()
+
+                println("isFavoriteFiltered: $isFavoriteFiltered")
+                val videos = if (isFavoriteFiltered) {
+                    videoDao.findAllFavorites()
+                } else {
+                    videoDao.findAll()
+                }
 
                 activity?.runOnUiThread {
                     videoAdapter.submitList(videos)
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setVideoList()
     }
 }

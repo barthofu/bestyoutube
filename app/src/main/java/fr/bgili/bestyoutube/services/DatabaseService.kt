@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import fr.bgili.bestyoutube.dao.VideoDao
-import fr.bgili.bestyoutube.entities.Video
+import fr.bgili.bestyoutube.data.dao.VideoDao
+import fr.bgili.bestyoutube.data.entities.Video
 
 @Database(
     entities = [

@@ -1,8 +1,8 @@
-package fr.bgili.bestyoutube.validators
+package fr.bgili.bestyoutube.utils.validators
 
 import fr.bgili.bestyoutube.R
-import fr.bgili.bestyoutube.validators.base.BaseValidator
-import fr.bgili.bestyoutube.validators.base.ValidateResult
+import fr.bgili.bestyoutube.utils.validators.base.BaseValidator
+import fr.bgili.bestyoutube.utils.validators.base.ValidateResult
 
 class EmptyValidator(private val input: String) : BaseValidator() {
 

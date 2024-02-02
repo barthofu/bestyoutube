@@ -1,4 +1,4 @@
-package fr.bgili.bestyoutube.validators.base
+package fr.bgili.bestyoutube.utils.validators.base
 
 import fr.bgili.bestyoutube.R
 

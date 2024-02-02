@@ -1,4 +1,4 @@
-package fr.bgili.bestyoutube.dao
+package fr.bgili.bestyoutube.data.dao
 
 import androidx.room.Delete
 import androidx.room.Insert
@@ -7,7 +7,7 @@ import androidx.room.RawQuery
 import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import fr.bgili.bestyoutube.entities.BaseEntity
+import fr.bgili.bestyoutube.data.entities.BaseEntity
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseDao<T : BaseEntity> {

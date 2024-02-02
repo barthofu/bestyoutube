@@ -1,4 +1,4 @@
-package fr.bgili.bestyoutube.entities
+package fr.bgili.bestyoutube.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
