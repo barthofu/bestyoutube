@@ -1,5 +1,11 @@
 # Best Youtube Videos
 
+> By Bartholomé GILI
+> for the Android course of ESTIAM E4 WMD
+> 2023-2024
+
+> Professor: MR. Chevalier
+
 This is a simple native Android application written in Kotlin who's goal is to manage a list of the best Youtube videos. 
 
 The user can add, edit and delete videos from the list. There's also a favorite system.
